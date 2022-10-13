@@ -40,6 +40,12 @@ module.exports = {
         try {
             const payload = req.body;
 
+            if (req.user.role > 200) {
+                return res.status(403).json({
+                    message: "Doesn't have access to this action."
+                })
+            }
+
             const drink = await Drink(payload).populate('category', 'name');
             await drink.save();
 
@@ -57,6 +63,12 @@ module.exports = {
             const { id } = req.params;
             const payload = req.body;
 
+            if (req.user.role > 200) {
+                return res.status(403).json({
+                    message: "Doesn't have access to this action."
+                })
+            }
+
             await Drink.findOneAndUpdate({ _id: id }, payload);
 
             res.json({
@@ -72,6 +84,12 @@ module.exports = {
     destroy: async (req, res) => {
         try {
             const { id } = req.params;
+
+            if (req.user.role > 200) {
+                return res.status(403).json({
+                    message: "Doesn't have access to this action."
+                })
+            }
 
             const drink = await Drink.findOneAndRemove({ _id: id });
 
