@@ -15,19 +15,19 @@ module.exports = {
                 }
             }]);
 
-            const tax = data[0].subTotal * 0.1;
-            const total = data[0].subTotal + tax;
+            const tax = data[0]?.subTotal * 0.1;
+            const total = data[0]?.subTotal + tax;
 
             res.json({
                 message: 'Success',
                 data: {
                     product: cart,
-                    subTotal: data[0].subTotal,
-                    total: total
+                    subTotal: data[0]?.subTotal,
+                    total: total ? total : undefined
                 }
             })
         } catch (err) {
-            res.status(500).json({ message: err.message || 'Internal Server Error' });
+            res.status(500).json({ message: err.errors || 'Internal Server Error' });
         }
     },
 
@@ -43,7 +43,7 @@ module.exports = {
                 data: cart
             })
         } catch (err) {
-            res.status(500).json({ message: err.message || 'Internal Server Error' });
+            res.status(500).json({ message: err.errors || 'Internal Server Error' });
         }
     },
 
@@ -61,7 +61,7 @@ module.exports = {
             res.json({ message: "Updated" })
 
         } catch (err) {
-            res.status(500).json({ message: err.message || 'Internal Server Error' });
+            res.status(500).json({ message: err.errors || 'Internal Server Error' });
         }
     },
 
@@ -75,7 +75,34 @@ module.exports = {
                 message: "Deleted"
             })
         } catch (err) {
-            res.status(500).json({ message: err.message || 'Internal Server Error' });
+            res.status(500).json({ message: err.errors || 'Internal Server Error' });
+        }
+    },
+
+    destroyMany: async (req, res) => {
+        try {
+            const { data } = req.body;
+
+            if (data.length > 0 && typeof data === 'object') {
+                await Cart.deleteMany({ _id: { $in: data } });
+
+                res.json({ message: "Deleted" });
+            } else {
+                res.status(400).json({ message: "Data must be array of id" });
+            }
+
+        } catch (err) {
+            res.status(500).json({ message: err.errors || 'Internal Server Error' });
+        }
+    },
+
+    destroyAll: async (req, res) => {
+        try {
+            await Cart.deleteMany({});
+
+            res.json({ message: "Deleted" });
+        } catch (err) {
+            res.status(500).json({ message: err.errors || 'Internal Server Error' });
         }
     }
 }
