@@ -8,6 +8,7 @@ const categoryRouter = require('./app/category/router');
 const drinkRouter = require('./app/drink/router');
 const foodRouter = require('./app/food/router');
 const cartRouter = require('./app/cart/router');
+const transactionRouter = require('./app/transaction/router');
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use('/category', categoryRouter);
 app.use('/drink', drinkRouter);
 app.use('/food', foodRouter);
 app.use('/cart', cartRouter);
+app.use('/transaction', transactionRouter);
 
 module.exports = app;
