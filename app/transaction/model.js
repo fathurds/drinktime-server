@@ -13,6 +13,10 @@ const transactionSchema = mongoose.Schema({
         type: Number,
         required: [true, 'total cannot be empty'],
     },
+    cashier: {
+        type: String,
+        required: [true, 'Cashier cannot be empty'],
+    },
     product: [{
         name: {
             type: String,

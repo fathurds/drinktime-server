@@ -163,6 +163,7 @@ module.exports = {
 
                     payload = {
                         transactionId: `INV/${dateNumber}/${uniqueCode}`,
+                        cashier: req.user.username,
                         product: cart,
                         subTotal: data[0]?.subTotal,
                         total: total ? total : undefined,
@@ -171,6 +172,7 @@ module.exports = {
                 } else {
                     payload = {
                         transactionId: `INV/${dateNumber}/1`,
+                        cashier: req.user.username,
                         product: cart,
                         subTotal: data[0]?.subTotal,
                         total: total ? total : undefined,

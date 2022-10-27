@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { index, detail, transactionToday } = require("./controller");
+const { create, index, destroy } = require("./controller");
 const { isLoginUser } = require('../middleware/auth');
 
 router.get('/', isLoginUser, index);
-router.get('/today', isLoginUser, transactionToday);
-router.get('/detail/:id', isLoginUser, detail);
+router.post('/create', isLoginUser, create);
+router.delete('/delete/:username', isLoginUser, destroy);
 
 module.exports = router;
