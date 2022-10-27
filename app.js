@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
 const authRouter = require('./app/auth/router');
 const userRouter = require('./app/user/router');
@@ -12,6 +13,7 @@ const cartRouter = require('./app/cart/router');
 const transactionRouter = require('./app/transaction/router');
 
 const app = express();
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
